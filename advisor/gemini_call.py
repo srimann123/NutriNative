@@ -88,17 +88,17 @@ The user has provided the following information:
 Your task:
 1. Use the context to reason about dietary needs and culturally sensitive modifications.
 2. Do not include generalizations or unsupported advice.
-3. Respond ONLY with a valid JSON object in the following format — no commentary, no markdown, nothing else:
+3. Respond ONLY with a valid JSON object in the following format:
 
 {{
-  "condition_summary": "A specific summary of how the condition affects dietary needs.",
-  "modification1": "An evidence-backed modification to the dish for this condition and culture.",
-  "modification2": "Another evidence-backed change.",
-  "modification3": "A third recommendation.",
+  "condition_summary": "A specific summary of how the condition affects dietary needs, including evidence cited direcly from the above context.",
+  "modification1": "An evidence-backed modification to the dish for this condition and culture, including evidence cited direcly from the above context.",
+  "modification2": "Another evidence-backed change, including evidence cited direcly from the above context.",
+  "modification3": "A third recommendation, including evidence cited direcly from the above context.",
   "context": "The context as is, from which the modifications were generated"
 }}
 
-Do not include explanations. Do not repeat this prompt. Return ONLY the JSON.
+Do not repeat this prompt. Return ONLY the JSON.
 """
 
 
