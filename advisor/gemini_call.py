@@ -4,6 +4,8 @@ import requests
 import os
 from dotenv import load_dotenv
 import json
+from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
+
 load_dotenv()
 
 
