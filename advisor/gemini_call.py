@@ -12,19 +12,35 @@ embedding_model = "text-embedding-3-small"
 
 #condition_expert = {"Diabetes": "American Diabetes Association (ADA)", "Hypertension": "American Heart Association (AHA)"}
 
-def load_collection(collection_name="guideline_chunks"): # db_path="/Users/srimannramachandruni/BNFOPython/NutriNativeRag/rag_outputs"
+def load_collection(collection_name="guideline_chunks"):
+    # Use Render's writable directory
     db_path = "/tmp/chroma_db"
+
+    # Use OpenAI embeddings instead of ONNX
+    embedding_fn = OpenAIEmbeddingFunction(api_key=os.environ["OPENAI_API_KEY"])
+
+    # Set up Chroma client and collection
     chroma_client = chromadb.PersistentClient(path=db_path)
+    collection = chroma_client.get_or_create_collection(
+        name=collection_name,
+        embedding_function=embedding_fn
+    )
 
-    collection = chroma_client.get_or_create_collection(name="guideline_chunks")
-
+    # If the collection is empty, rebuild it from JSON
     if len(collection.get()["documents"]) == 0:
-        print("⚠️ Collection empty — rebuilding from JSON")
+        print("⚠️ Chroma collection is empty — rebuilding from JSON file.")
         with open("advisor/combined_chunks.json") as f:
             chunks = json.load(f)
-            for i, chunk in enumerate(chunks):
-                collection.add(documents=[chunk["text"]], metadatas=[{"source": chunk["source"]}], ids=[str(i)])
-    
+
+        for i, chunk in enumerate(chunks):
+            collection.add(
+                documents=[chunk["text"]],
+                metadatas=[{"source": chunk.get("source", "unknown")}],
+                ids=[str(i)]
+            )
+
+        print(f"✅ Loaded {len(chunks)} chunks into ChromaDB.")
+
     return collection
 
 def get_query_embedding(query_text):
