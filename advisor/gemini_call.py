@@ -40,6 +40,8 @@ def get_nutrition_advice(condition, culture, dish):
    results = query_chunks(query)
    context_section = "\n\n".join(results)
 
+   print(context_section)
+
    prompt = f"""
 You are a culturally sensitive medical nutrition assistant.
 
