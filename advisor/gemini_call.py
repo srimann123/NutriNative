@@ -55,20 +55,18 @@ The user has provided the following information:
 - Dish of interest: {dish}
 
 Your task:
-1. Walk through your reasoning step by step, citing specific phrases from the context above.
-2. For each recommendation, explain why it is supported by the context and appropriate for the cultural background.
-3. Then, generate a valid JSON object in the following format, but fill it in with specific, evidence-based content:
-
-Example format (replace this with actual values from the context):
+1. Use the context to reason about dietary needs and culturally sensitive modifications.
+2. Do not include generalizations or unsupported advice.
+3. Respond ONLY with a valid JSON object in the following format — no commentary, no markdown, nothing else:
 
 {{
-  "condition_summary": "...",
-  "modification1": "...",
-  "modification2": "...",
-  "modification3": "..."
+  "condition_summary": "A specific summary of how the condition affects dietary needs.",
+  "modification1": "An evidence-backed modification to the dish for this condition and culture.",
+  "modification2": "Another evidence-backed change.",
+  "modification3": "A third recommendation."
 }}
 
-Only return the filled-in JSON. Do not return explanations or comments outside it.
+Do not include explanations. Do not repeat this prompt. Return ONLY the JSON.
 """
 
 
