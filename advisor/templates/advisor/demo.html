@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 30px 0;
+  border: 3px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; 
+
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-wrapper {
+  border-radius: 5px;
+  padding: 40px 30px;
+  width: 50%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f2f4f8; /* optional: adds contrast */
+  border: 2px solid #ccc;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05); /* subtle shadow */
+}
+
+</style>
+<body style="background-color: #f6f2ef;">
+
+<h1 class = "form-container">NutriNative</h1>
+<hr style="height:2px;border-width:0;color:gray;background-color:black;width: 50%;">
+
+
+<div>
+  <form action="" method="POST" class="form-wrapper">
+    {% csrf_token %}
+
+    <label for="conditions">Select a condition you are interested in:</label>
+    <select id="conditions" name="conditions">
+      <option value="" disabled selected>Select a condition</option>
+      <option value="Diabetes" {% if conditions == "Diabetes" %}selected{% endif %}>Diabetes</option>
+    </select>
+
+    <label for="culture">Select a culture you are interested in:</label>
+    <select id="culture" name="culture">
+      <option value="" disabled selected>Select a culture</option>
+      <option value="South Indian" {% if culture == "South Indian" %}selected{% endif %}>South Indian</option>
+      <option value="North Indian" {% if culture == "North Indian" %}selected{% endif %}>North Indian</option>
+      <option value="Chinese" {% if culture == "Chinese" %}selected{% endif %}>Chinese</option>
+      <option value="Japanese" {% if culture == "Japanese" %}selected{% endif %}>Japanese</option>
+      <option value="Korean" {% if culture == "Korean" %}selected{% endif %}>Korean</option>
+      <option value="Vietnamese" {% if culture == "Vietnamese" %}selected{% endif %}>Vietnamese</option>
+      <option value="Thai" {% if culture == "Thai" %}selected{% endif %}>Thai</option>
+      <option value="Middle Eastern" {% if culture == "Middle Eastern" %}selected{% endif %}>Middle Eastern</option>
+      <option value="Ethiopian" {% if culture == "Ethiopian" %}selected{% endif %}>Ethiopian</option>
+      <option value="French" {% if culture == "French" %}selected{% endif %}>French</option>
+      <option value="Italian" {% if culture == "Italian" %}selected{% endif %}>Italian</option>
+      <option value="Mexican" {% if culture == "Mexican" %}selected{% endif %}>Mexican</option>
+      <option value="Caribbean" {% if culture == "Caribbean" %}selected{% endif %}>Caribbean</option>
+      <option value="American Southern" {% if culture == "American Southern" %}selected{% endif %}>American Southern</option>
+      <option value="Jewish" {% if culture == "Jewish" %}selected{% endif %}>Jewish</option>
+    </select>
+
+    <label for="dish">Enter a dish you'd like to modify:</label>
+    <input type="text" id="dish" name="dish" placeholder="Ex: Chicken Biryani" value="{{ dish }}">
+
+    <input type="submit" value="Submit">
+  </form>
+  {% if user_input %}
+<div class="form-wrapper" style="margin-top: 40px; text-align: center;">
+  <h2>Personalized Nutritional Advice</h2>
+
+  <div style="display: inline-block; text-align: left;">
+    <ul style="list-style: none; padding: 0;">
+      {% if user_input.error %}
+        <li><strong>Error:</strong> {{ user_input.error }}</li>
+      {% else %}
+          <li style = "margin-bottom: 10px;">
+            <strong>Condition Summary:</strong><br>
+          </li>
+          <li style = "margin-bottom: 10px;">
+          {{ user_input.condition_summary }}
+          </li>
+        <li style="margin-bottom: 20px;">
+          <strong>Modifications to {{dish}}:</strong>
+          <ol style="margin-top: 10px; margin-left: 20px;">
+            <li style="margin-bottom: 10px;">{{ user_input.modification1 }}</li>
+            <li style="margin-bottom: 10px;">{{ user_input.modification2 }}</li>
+            <li style="margin-bottom: 10px;">{{ user_input.modification3 }}</li>
+          </ol>
+        </li>
+
+        {% if image %}
+          <li style="margin-bottom: 20px;">
+            <img src="{{ image }}" alt="Suggested image for {{ dish }}" style="max-width: 400px; border-radius: 10px; margin-top: 10px;" />
+<!--             <img src="data:image/png;base64,{{ image }}" alt="Suggested image for {{ dish }}" style="max-width: 400px; border-radius: 10px; margin-top: 10px;" />
+ -->      </li>
+        {% endif %}
+
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+  {% endif %}
+
+</div>
+
+</body>
+</html>
+
+
