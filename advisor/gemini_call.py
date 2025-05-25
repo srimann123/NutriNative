@@ -11,7 +11,8 @@ embedding_model = "text-embedding-3-small"
 
 #condition_expert = {"Diabetes": "American Diabetes Association (ADA)", "Hypertension": "American Heart Association (AHA)"}
 
-def load_collection(collection_name="guideline_chunks", db_path="/Users/srimannramachandruni/BNFOPython/NutriNativeRag/rag_outputs"):
+def load_collection(collection_name="guideline_chunks"): # db_path="/Users/srimannramachandruni/BNFOPython/NutriNativeRag/rag_outputs"
+    db_path = "/tmp/chroma_db"
     chroma_client = chromadb.PersistentClient(path=db_path)
     return chroma_client.get_or_create_collection(name=collection_name)
 
