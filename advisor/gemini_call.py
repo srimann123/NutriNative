@@ -23,7 +23,7 @@ def load_collection(collection_name="guideline_chunks"): # db_path="/Users/srima
         with open("advisor/combined_chunks.json") as f:
             chunks = json.load(f)
             for i, chunk in enumerate(chunks):
-                collection.add(documents=[chunk], ids=[str(i)])
+                collection.add(documents=[chunk["text"]], metadatas=[{"source": chunk["source"]}], ids=[str(i)])
     
     return collection
 
