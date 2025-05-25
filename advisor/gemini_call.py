@@ -14,7 +14,17 @@ embedding_model = "text-embedding-3-small"
 def load_collection(collection_name="guideline_chunks"): # db_path="/Users/srimannramachandruni/BNFOPython/NutriNativeRag/rag_outputs"
     db_path = "/tmp/chroma_db"
     chroma_client = chromadb.PersistentClient(path=db_path)
-    return chroma_client.get_or_create_collection(name=collection_name)
+
+    collection = chroma_client.get_or_create_collection(name="guideline_chunks")
+
+    if len(collection.get()["documents"]) == 0:
+        print("⚠️ Collection empty — rebuilding from JSON")
+        with open("advisor/combined_chunks.json") as f:
+            chunks = json.load(f)
+            for i, chunk in enumerate(chunks):
+                collection.add(documents=[chunk], ids=[str(i)])
+    
+    return collection
 
 def get_query_embedding(query_text):
     response = client.embeddings.create(
