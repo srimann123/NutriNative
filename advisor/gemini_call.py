@@ -65,7 +65,8 @@ Your task:
   "condition_summary": "A specific summary of how the condition affects dietary needs.",
   "modification1": "An evidence-backed modification to the dish for this condition and culture.",
   "modification2": "Another evidence-backed change.",
-  "modification3": "A third recommendation."
+  "modification3": "A third recommendation.",
+  "context": "The context as is, from which the modifications were generated"
 }}
 
 Do not include explanations. Do not repeat this prompt. Return ONLY the JSON.
